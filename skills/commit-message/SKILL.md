@@ -48,7 +48,7 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
 ### Optional elements
 
 - **scope** — noun in parentheses for the affected area: `feat(parser): add array support`.
-- **body** — blank line after description; free-form paragraphs with extra context. Prefer **why** over **what** when the user asks for a why-focused message.
+- **body** — blank line after description; short why-focused paragraph (1-2 lines). Only when the user asks for detail or the change's rationale isn't evident from the diff; otherwise omit.
 - **footers** — blank line after body; git-trailer style (`Refs: #123`, `Reviewed-by: Name`). Use `BREAKING CHANGE: <description>` for breaking changes.
 
 ### Breaking changes
@@ -67,7 +67,7 @@ Unless the repository's `git log` clearly differs:
 - Lowercase type and scope.
 - Imperative description: "add", "fix", "remove" — not "added" or "adds".
 - Keep the description ≤ 72 characters when practical.
-- Omit body when the description is sufficient.
+- Default to a **subject-only** message (single line). Add a brief (1-2 line) why-focused body only when the change's rationale isn't evident from the diff, or the user explicitly asks for more detail.
 - Split mixed-type changes into separate commits/messages when possible.
 
 ## Output format
@@ -78,11 +78,9 @@ Return:
 **Commit:**
 ```
 type(scope): description
-
-Optional why-focused body.
-
-Optional footers.
 ```
+
+Body (1-2 lines) only when the change's why isn't evident from the diff; footers only for breaking changes or trailers.
 
 State that nothing was committed or pushed unless the user asked.
 
@@ -90,6 +88,7 @@ State that nothing was committed or pushed unless the user asked.
 
 - Run `git commit`, `git push`, or `git add` unless explicitly requested.
 - List every changed file in the body.
+- Add a body that restates the diff, exceeds a few lines, or pads with boilerplate.
 - Combine unrelated changes in one message.
 
 ## Examples
@@ -98,9 +97,14 @@ State that nothing was committed or pushed unless the user asked.
 
 ```
 feat(auth): add refresh token rotation
+```
 
-Reduce session hijack window by issuing short-lived access tokens and
-rotating refresh tokens on each use.
+**With body (why not evident from diff)**
+
+```
+feat(auth): add refresh token rotation
+
+Issuing short-lived access tokens narrows the session hijack window.
 ```
 
 **Fix, description only**
