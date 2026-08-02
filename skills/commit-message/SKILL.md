@@ -1,17 +1,17 @@
 ---
-name: branch-and-commit
-description: Proposes a git branch name and Conventional Commits 1.0.0 message from current changes. Use when the user asks for a branch name, commit message, or both before committing, when wrapping up work, or when they want git metadata without committing or pushing.
+name: commit-message
+description: Proposes a Conventional Commits 1.0.0 message from current changes. Use when the user asks for a commit message before committing, when wrapping up work, or when they want commit metadata without committing or pushing.
 disable-model-invocation: true
 ---
 
-# Branch and Commit
+# Commit Message
 
-Propose a branch name and [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) message from the current working tree. Do **not** create the branch, stage, commit, or push unless the user explicitly asks.
+Propose a [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) message from the current working tree. Do **not** stage, commit, or push unless the user explicitly asks.
 
 ## When to run
 
-- User requests a branch name, commit message, or both.
-- User wants git metadata before committing.
+- User requests a commit message.
+- User wants commit metadata before committing.
 - User is finishing a task and needs a conventional subject/body.
 
 Skip when the user explicitly asks to commit or push — follow their commit workflow instead.
@@ -27,29 +27,6 @@ git log -5 --oneline
 ```
 
 Read enough of `git diff` (or the user's stated goal) to infer intent. When `git log` shows an established style, match its casing, scope habits, and verbosity. Prefer the user's described outcome over a file inventory.
-
-## Branch name
-
-Conventional Commits does not define branch names; use a lightweight parallel convention:
-
-**Format:** `<type>/<short-kebab-slug>`
-
-| Prefix     | Typical use                     |
-|------------|---------------------------------|
-| `feat`     | New feature or capability       |
-| `fix`      | Bug fix                         |
-| `docs`     | Documentation only              |
-| `chore`    | Tooling, deps, hygiene          |
-| `refactor` | Behavior-preserving restructure |
-| `ci`       | CI/CD changes                   |
-| `test`     | Tests only                      |
-| `perf`     | Performance work                |
-
-Rules:
-
-- Lowercase, hyphen-separated; aim for ≤ 50 characters.
-- Name the outcome, not touched paths (`add-oauth-login`, not `update-auth-files`).
-- One coherent deliverable per branch; split unrelated work.
 
 ## Commit message
 
@@ -98,8 +75,6 @@ Unless the repository's `git log` clearly differs:
 Return:
 
 ```markdown
-**Branch:** `type/slug`
-
 **Commit:**
 ```
 type(scope): description
@@ -108,14 +83,12 @@ Optional why-focused body.
 
 Optional footers.
 ```
-```
 
 State that nothing was committed or pushed unless the user asked.
 
 ## Do not
 
-- Run `git commit`, `git push`, `git checkout -b`, or `git add` unless explicitly requested.
-- Use vague slugs (`updates`, `wip`, `changes`).
+- Run `git commit`, `git push`, or `git add` unless explicitly requested.
 - List every changed file in the body.
 - Combine unrelated changes in one message.
 
