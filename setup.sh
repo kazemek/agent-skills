@@ -8,9 +8,10 @@ COMMANDS_SRC="$SCRIPT_DIR/commands"
 OPENCODE_DEST="$HOME/.config/opencode/skills"
 OPENCODE_COMMAND_DEST="$HOME/.config/opencode/command"
 CURSOR_DEST="$HOME/.cursor/skills"
+CODEX_DEST="$HOME/.agents/skills"
 
 # Create destination directories if they don't exist
-mkdir -p "$OPENCODE_DEST" "$OPENCODE_COMMAND_DEST" "$CURSOR_DEST"
+mkdir -p "$OPENCODE_DEST" "$OPENCODE_COMMAND_DEST" "$CURSOR_DEST" "$CODEX_DEST"
 
 echo "Linking agent skills from $SKILLS_SRC..."
 
@@ -21,8 +22,9 @@ for skill_dir in "$SKILLS_SRC"/*; do
     # Create symbolic links (-n prevents nesting inside existing symlinks)
     ln -sfn "$skill_dir" "$OPENCODE_DEST/$skill_name"
     ln -sfn "$skill_dir" "$CURSOR_DEST/$skill_name"
+    ln -sfn "$skill_dir" "$CODEX_DEST/$skill_name"
 
-    echo "  [linked] $skill_name -> OpenCode & Cursor"
+    echo "  [linked] $skill_name -> OpenCode, Cursor & Codex"
   fi
 done
 
