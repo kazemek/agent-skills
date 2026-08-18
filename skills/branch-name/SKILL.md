@@ -1,7 +1,7 @@
 ---
 name: branch-name
 description: Proposes a git branch name from current changes. Use when the user asks for a branch name before creating a branch, when wrapping up work, or when they want branch metadata without creating a branch.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Branch Name

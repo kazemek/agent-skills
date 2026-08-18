@@ -1,7 +1,7 @@
 ---
 name: commit-message
 description: Proposes a Conventional Commits 1.0.0 message from current changes. Use when the user asks for a commit message before committing, when wrapping up work, or when they want commit metadata without committing or pushing.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Commit Message
