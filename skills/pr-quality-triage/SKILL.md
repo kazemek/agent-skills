@@ -1,14 +1,16 @@
 ---
 name: pr-quality-triage
-description: Inspects CI and Sonar/static-analysis findings on an existing pull request, verifies they belong to the current PR/head, classifies each finding, and fixes applicable issues in repository code. Use after a PR exists when the user asks to triage CI failures, Sonar issues, quality-gate results, new-code smells, or similar static quality findings. Do not use for human review comments — that is address-pr-comments.
+description: Inspects CI status and Sonar new-code findings on an existing pull request, verifies they belong to the current PR/head, classifies each finding, and fixes applicable issues in repository code. Use after a PR exists when the user asks to triage CI failures, Sonar issues, quality-gate results, or Sonar new-code smells. Do not use for GitHub PR review comments — including CodeRabbit, ChatGPT, and other review bots; that remains address-pr-comments.
 argument-hint: "PR reference (e.g. owner/repo#123, #123, or URL) — add 'yolo' for hands-free commit/push"
 ---
 
 # PR Quality Triage
 
-Triage **CI / Sonar / static-analysis findings** on an existing pull request. Modify repository
-code when a finding still applies. Do **not** handle human review comments, threads, or review
-replies — that workflow is `address-pr-comments`.
+Triage **CI and Sonar findings** on an existing pull request. Modify repository code when a
+finding still applies.
+
+GitHub PR review comments — human or bot, including CodeRabbit and ChatGPT — stay with
+`address-pr-comments`. This skill does not replace that workflow.
 
 This skill may diagnose and fix locally. It must **not** claim Sonar, Quality Gate, or zero-new-code
 completion from its own analysis. Post-push CI remains the authority.
@@ -153,7 +155,8 @@ as the completion signal — optionally re-enter this skill once that analysis i
   or any successor).
 - Change quality profiles, quality gates, project administration, webhooks, or other Sonar
   configuration.
-- Duplicate `address-pr-comments` (no review-thread replies, thread resolution, or review-only work).
+- Duplicate `address-pr-comments`. Leave GitHub review comments, review-bot threads, replies,
+  and thread resolution to that skill.
 - Encode one repository's paths, Sonar project keys, tracker IDs, or maintainer usernames into
   this skill's behavior.
 - Treat a missing Sonar MCP installation as a repository failure. CI remains sufficient authority.
