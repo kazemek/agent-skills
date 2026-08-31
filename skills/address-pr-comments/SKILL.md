@@ -1,12 +1,14 @@
 ---
 name: address-pr-comments
-description: Reads the comments of a GitHub pull request via the GitHub MCP, assesses which are reasonable, plans and implements the needed changes, and offers to commit, push, and reply on the PR. Use when the user wants PR comments or review feedback addressed, e.g. "address the comments on PR #12", "handle the review on owner/repo#42", or adds "yolo" for hands-free commit/push/reply.
+description: Reads the comments of a GitHub pull request via the GitHub MCP, assesses which are reasonable, plans and implements the needed changes, and offers to commit, push, and reply on the PR. Use when the user wants human PR review comments or review feedback addressed, e.g. "address the comments on PR #12", "handle the review on owner/repo#42", or adds "yolo" for hands-free commit/push/reply. Do not use for CI, Sonar, quality-gate, or static-analysis triage — that is pr-quality-triage.
 argument-hint: "PR reference (e.g. owner/repo#123, #123, or URL) — add 'yolo' for hands-free commit/push/reply"
 ---
 
 # Address PR Comments
 
-Work through the comments of a GitHub pull request: read them, assess which are reasonable, plan the changes, implement them after approval, and — when approved — commit, push, and reply on the PR.
+Work through **human review comments** on a GitHub pull request: read them, assess which are reasonable, plan the changes, implement them after approval, and — when approved — commit, push, and reply on the PR.
+
+CI failures, Sonar issues, quality-gate results, and other static-analysis findings on an existing PR belong to `pr-quality-triage`, not this skill.
 
 ## Input parsing
 
