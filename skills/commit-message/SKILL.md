@@ -1,6 +1,6 @@
 ---
 name: commit-message
-description: Proposes a Conventional Commits 1.0.0 message from current changes. Use when the user asks for a commit message before committing, when wrapping up work, or when they want commit metadata without committing or pushing.
+description: Proposes a Conventional Commits 1.0.0 message that passes the commitlint config-conventional ruleset. Use when the user asks for a commit message before committing, when wrapping up work, or when they want commit metadata without committing or pushing.
 disable-model-invocation: false
 ---
 
@@ -42,14 +42,14 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
 
 ### Required elements
 
-- **type** — noun prefix and required colon + space. Use `feat` for new features, `fix` for bug fixes. Other common types: `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`, `revert`.
+- **type** — noun prefix and required colon + space. Must be one of the commitlint type-enum (closed set): `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`. Use `feat` for new features, `fix` for bug fixes.
 - **description** — short imperative summary immediately after the prefix (e.g. `fix: array parsing issue when multiple spaces were contained in string`).
 
 ### Optional elements
 
 - **scope** — noun in parentheses for the affected area: `feat(parser): add array support`.
 - **body** — blank line after description; short why-focused paragraph (1-2 lines). Only when the user asks for detail or the change's rationale isn't evident from the diff; otherwise omit.
-- **footers** — blank line after body; git-trailer style (`Refs: #123`, `Reviewed-by: Name`). Use `BREAKING CHANGE: <description>` for breaking changes.
+- **footers** — blank line after body; git-trailer style (`Refs: #123`, `Reviewed-by: Name`). Use `BREAKING CHANGE: <description>` (or `BREAKING-CHANGE:`) for breaking changes. Footer lines wrap at ≤ 100 chars.
 
 ### Breaking changes
 
@@ -64,11 +64,25 @@ Both may be used together per the spec.
 
 Unless the repository's `git log` clearly differs:
 
-- Lowercase type and scope.
+- Lowercase type and scope (`type-case`, `scope-case`).
 - Imperative description: "add", "fix", "remove" — not "added" or "adds".
-- Keep the description ≤ 72 characters when practical.
+- Header (type + scope + description) ≤ 100 characters, per commitlint's `header-max-length`.
+- Description must not be sentence-case, start-case, pascal-case, or upper-case (`subject-case`), and has no leading/trailing whitespace or trailing period (`subject-full-stop`).
+- Body and footer lines wrap at ≤ 100 characters (`body-max-line-length`, `footer-max-line-length`). There is no cap on total body length; keep it brief by taste (see below).
+- Blank line between description and body, and between body and footers (`body-leading-blank`, `footer-leading-blank`).
 - Default to a **subject-only** message (single line). Add a brief (1-2 line) why-focused body only when the change's rationale isn't evident from the diff, or the user explicitly asks for more detail.
 - Split mixed-type changes into separate commits/messages when possible.
+
+## Validate before returning
+
+Self-check the proposal against the commitlint [config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) rules:
+
+- Header ≤ 100 chars; type present, lowercase, in the type-enum; scope lowercase (if used).
+- Description non-empty, lowercase-style, no trailing period, no surrounding whitespace.
+- Blank lines between description/body and body/footers; body and footer lines ≤ 100 chars.
+- `BREAKING CHANGE:` footer or `!` for breaking changes, never both absent.
+
+If the repository defines its own commitlint config (`commitlint.config.*`, `package.json` `commitlint` field), defer to it on conflict.
 
 ## Output format
 
